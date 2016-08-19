@@ -295,3 +295,8 @@ img.watermark {
   bottom: 10px;
   left: 10px;
   display: block; }
+
+img.plain {
+  box-shadow: 0;
+  border: 0;
+  padding: 5px; }

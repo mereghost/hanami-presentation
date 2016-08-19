@@ -32,19 +32,26 @@
 				<h3>A beleza da simplicidade</h3>
 			</section>
 			<section>
-				APRESENTAÇÃO
-			</section>
-			<section>
 				<section>
-					<h2>Tópicos</h2>
+					<h2>Quem sou eu?</h2>
+					<p>Alguns me conhecem por <a href="http://twitter.com/mereghost">@mereghost</a></p>
+				</section>
+				<section>
+					<h2>Geek assumido</h2>
 					<ul>
-						<li>O que é?</li>
-						<li>Estrutura da app</li>
-						<li>Testabilidade</li>
-						<li>Framework não é a app</li>
-						<li>ORM</li>
-						<li>Conceitos distintos</li>
+						<li class="fragment">Leitor voraz</li>
+						<li class="fragment">Apaixonado por RPGs, <a href="http://boardgamegeek.com/collection/user/mereghost">jogos de tabuleiro</a> etc</li>
+						<li class="fragment">
+							Praticante de
+							<a href="http://www.kytrinyx.com/talks/therapeutic-refactoring">Refactor Terapêutico</a>
+						</li>
 					</ul>
+					<aside class="notes">TR => Katrina Olwen - 2012</aside>
+				</section>
+				<section>
+					<a class="image-link" href="https://www.vagas.com.br/institucional/quem-somos">
+						<img class="plain" src="imgs/logo-vagas.png" alt="VAGAS">
+					</a>
 				</section>
 			</section>
 			<section>
@@ -66,11 +73,14 @@
 					<aside class="notes">
 						<ol>
 							<li>O stack é menor e mais rápido. CDNs from the gound up.</li>
-							<li>Content Security Policy, X-Frame headers</li>
+							<li>Content Security Policy (XSS), X-Frame headers (quem pode abrir em frames)</li>
 							<li>100nas funcionalidades, 60% menos memória.</li>
-							<li>Diferenciar de familiaridade</li>
+							<li>Diferenciar simples de familiar</li>
 						</ol>
 					</aside>
+				</section>
+				<section>
+					<h2></h2>
 				</section>
 				<section data-background-image="imgs/uncle_bob.jpg">
 					<div style="color: #fff">
@@ -83,23 +93,49 @@
 						</blockquote>
 					</div>
 				</section>
+			</section>
+			<section>
+				<h2>A mudança de mindset</h2>
+				<p>Isso é sempre um desafio =/</p>
+			</section>
+			<section>
 				<section>
-					<ul>
-						<li>Proposito</li>
-						<li>Features</li>
-						<li>Filosofia</li>
-					</ul>
+					<h2>Controllers & Actions</h2>
+				</section>
+				<section>
+					<h3>Controllers</h3>
+					<p>São apenas um modulo, um namespace.</p>
+					<pre><code data-trim data-noescape>
+module Web::Controllers::AwesomeClassName
+  # here be dragons
+end
+					</code></pre>
+					<small>Errr... e como ficam as actions?</small>
+				</section>
+				<section>
+					<h3>Actions</h3>
+					<p>São cidadãos de primeira classe.</p>
+					<pre><code datatrim data-noescape>
+module Web::Controllers::AwesomeClassName
+  class Index
+		include Web::Action
+
+		def call(params)
+			# here be dragons 
+		end
+	end
+end
+					</code></pre>
 				</section>
 			</section>
 			<section>
-				<h2>Se livrando dos Rails-ismos</h2>
-			</section>
-			<section>
-				<ul>
-					<li>Testes</li>
-					<li>Controllers</li>
-					<li>"Models"</li>
-				</ul>
+				<h1>Obrigado!</h1>
+				<p>
+					Se tiver dúvidas, perguntas, vontade de trabalhar conosco ou só quiser trocar uma ideia:
+					<a href="mailto:marcello.rocha@vagas.com.br">marcello.rocha@vagas.com.br</a>
+				</p>
+				<small>Participem no gitter do projeto Hanami:
+						<a href="https://gitter.im/hanami/chat">https://gitter.im/hanami/chat</a></small>
 			</section>
 		</div>
 	</div>
