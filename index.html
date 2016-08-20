@@ -28,7 +28,9 @@
   <div class="reveal">
     <div class="slides">
       <section>
-        <h1>Hanami</h1>
+        <h1 style="margin-left: -150px;">
+          <img class="img-title" src="imgs/logo.png" alt="hanami logo">
+           Hanami </h1>
         <h3>A beleza da simplicidade</h3>
       </section>
       <section>
@@ -63,7 +65,7 @@
           <h3>é um framework web para Ruby.</h3>
         </section>
         <section>
-          <h3>Mas o que difere ele do resto?</h3>
+          <h3>O que ele oferece?</h3>
           <ol>
             <li class="fragment">Tempo de resposta</li>
             <li class="fragment">Segurança</li>
@@ -79,18 +81,15 @@
             </ol>
           </aside>
         </section>
-        <section>
-          <h2></h2>
-        </section>
         <section data-background-image="imgs/uncle_bob.jpg">
-          <div style="color: #fff">
-            <p class="fragment">Vale assistir a talk: <a style="color: #99f" href="https://www.youtube.com/watch?v=WpkDN78P884">Architecture: The Lost Years</a></p>
+          <div class="quotes">
             <blockquote class="fragment">
               Seu framework não é sua aplicação.
             </blockquote>
             <blockquote class="fragment">
               The web is just a delivery mechanism!
             </blockquote>
+            <p class="fragment">Vale assistir a talk: <a style="color: #99f" href="https://www.youtube.com/watch?v=WpkDN78P884">Architecture: The Lost Years</a></p>
           </div>
         </section>
       </section>
@@ -100,7 +99,38 @@
       </section>
       <section>
         <section>
-          <h2>Controllers & Actions</h2>
+          <h2>Estrutura de uma aplicação</h2>
+          <p class="fragment">Monolito primeiro</p>
+          <pre class="fragment"><code data-trim>
+$ hanami new aatt #awesome_all_the_things
+# apps config config.ru db lib public Rakefile spec
+          </code></pre>
+          <aside class="notes">
+            Comparar com Django e similares
+          </aside>
+        </section>
+        <section>
+          <h3>Multiplas aplicações &amp; Containers</h3>
+          <pre><code data-trim>
+$ ls apps/web
+# application.rb assets config controllers templates views
+          </code></pre>
+          <p class="fragment">
+            Aplicações dividem apenas as regras de negócio
+          </p>
+        </section>
+        <section>
+          <h3>E os "models"?</h3>
+          <pre class="fragment"><code data-trim>
+$ ls lib/**
+# aatt.rb aatt/entities aatt/repositories aatt/mailers
+          </code></pre>
+          <p class="fragment">A estrutura é apenas pra carregamento automático, tudo pode ser configurado</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Controllers &amp; Actions</h2>
         </section>
         <section>
           <h3>Controllers</h3>
@@ -121,7 +151,7 @@ module Web::Controllers::AwesomeClassName
     include Web::Action
 
     def call(params)
-      # here be dragons 
+      # here be dragons
     end
   end
 end
@@ -133,6 +163,48 @@ end
         </section>
         <section>
           <h3>Testabilidade</h3>
+          <pre><code data-trim data-noescape>
+RSpec.describe Web::Controllers::AwesomeClassName::Index
+  let(:action) { Web::Controllers::AwesomeClassName::Index.new }
+  subject(:response) { action.call({}) }
+
+  it 'does awesome things'
+end
+          </code></pre>
+        </section>
+        <section>
+          <h3>Só mostra o que os outros precisam ver</h3>
+          <small>Não existe desver algo.</small>
+          <pre><code data-trim data-noescape>
+module Web::Controllers::AwesomeClassName
+  class Index
+    include Web::Action
+    expose :inst_var #algo que a view precise ver
+  end
+end
+          </code></pre>
+        </section>
+        <section>
+          <h5>Mas eu chamo um método sempre a cada request!</h5>
+          <pre><code data-trim data-noescape>
+module Web
+  module MyReusableBehaviour
+  def self.included(action)
+    action.class_eval do
+      before :behaviour
+      expose :some_object
+    end
+  end
+  private def behaviour; @some_object = "Nothing to see here"; end
+end
+
+module Web::Controllers::AwesomeClassName
+  class Index
+    include Web::Action
+    include Web::MyReusableBehaviour
+  end
+end
+          </code></pre>
         </section>
       </section>
       <section>
