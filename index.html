@@ -231,7 +231,16 @@ end
           <h3>E pelo mesmo motivo!</h3>
           <pre><code data-trim>
 RSpec.describe Web::Views::AwesomeClassName::Index
-  let(:view) { Web::Views::AwesomeClassName::Index.new }
+  let(:exposures) { Hash[stuff: %w(cool awesome nifty)] }
+  let(:template) do
+    Hanami::View::Template.new('path/to/template.html.erb')
+  end
+
+  let(:view) do
+    Web::Views::AwesomeClassName::Index.new(template, exposures)
+  end
+
+  let(:rendered) { view.render }
 
   it 'autoescape all strings' do
     expect(view.title).to eq('Hanami &amp;amp; Ruby')
@@ -258,6 +267,11 @@ module Web::Views::AwesomeClassName
 end
           </code></pre>
         </section>
+        <section>
+          <h3>Mas não quero nem usar uma view!</h3>
+          <h5><i>#$@&%*!</i> Ok, pensamos nisso</h5>
+          <p class="fragment">Basta setar o body direto no controller</p>
+        </section>
       </section>
       <section>
         <section>
@@ -281,6 +295,21 @@ end
         </section>
         <section>
           <h3>Repositories</h3>
+          <p>São a interface entre o BD e a Entity.</p>
+          <pre><code data-trim>
+class AwesomeThingRepository
+  include Hanami::Repository
+end
+          </code></pre>
+        </section>
+        <section>
+          <h3>Mas o que dá pra fazer com eles?</h3>
+          <ul>
+            <li class="fragment">#all, #find, #create, #update, #delete</li>
+            <li class="fragment">#persist</li>
+          </ul>
+          <p class="fragment">Todos os métodos de query são privados</p>
+          <aside class="notes">Queries com valor de negócio</aside>
         </section>
         <section>
           <h3>Mappings</h3>
