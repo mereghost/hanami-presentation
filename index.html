@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/theme/vagas.css">
 
   <!-- Theme used for syntax highlighting of code -->
-  <link rel="stylesheet" href="lib/css/zenburn.css">
+  <link rel="stylesheet" href="lib/css/atom-one-light.css">
 
   <!-- Printing and PDF exports -->
   <script>
@@ -63,7 +63,7 @@
         <section>
           <h2>Hanami</h2>
           <h4>é um framework web completo para Ruby</h4>
-          <small>e também a prática de apreciar a beleza do florescer das cerejeiras</small>
+          <aside class="notes">também a prática de apreciar a beleza do florescer das cerejeiras</aside>
         </section>
         <section>
           <h3>O que ele oferece?</h3>
@@ -175,7 +175,6 @@ end
         </section>
         <section>
           <h3>Só mostra o que os outros precisam ver</h3>
-          <small>Não existe desver algo.</small>
           <pre><code data-trim data-noescape>
 module Web::Controllers::AwesomeClassName
   class Index
@@ -210,17 +209,86 @@ end
       </section>
       <section>
         <section>
+          <h2>Views &amp; Templates</h2>
+        </section>
+        <section>
+          <h3>Views</h3>
+          <pre><code data-trim data-noescape>
+module Web::Views::AwesomeClassName
+  class Index
+    include Web::Action
+
+    def title; 'Hanami & Ruby'; end
+  end
+end
+          </code></pre>
+          <p>Novamente, cidadãos de primeira classe</p>
+          <aside class="notes">
+            São como presenters
+          </aside>
+        </section>
+        <section>
+          <h3>E pelo mesmo motivo!</h3>
+          <pre><code data-trim>
+RSpec.describe Web::Views::AwesomeClassName::Index
+  let(:view) { Web::Views::AwesomeClassName::Index.new }
+
+  it 'autoescape all strings' do
+    expect(view.title).to eq('Hanami &amp;amp; Ruby')
+  end
+end
+          </code></pre>
+        </section>
+        <section>
+          <h3>Templates</h3>
+          <p>Esses vão parecer familiares...</p>
+          <pre><code data-trim data-noescape>
+<%= title %>
+          </code></pre>
+        </section>
+        <section>
+          <h3>Mas não quero usar um template!</h3>
+          <pre><code data-trim data-noescape>
+module Web::Views::AwesomeClassName
+  class Index
+    include Web::Action
+
+    def render; {this: 'method'}.to_json; end
+  end
+end
+          </code></pre>
+        </section>
+      </section>
+      <section>
+        <section>
           <h2>Entidades &amp; Repositórios</h2>
           <p>Ou models</p>
         </section>
         <section>
-          <h3></h3>
+          <h3>Entities</h3>
+          <pre class="fragment"><code data-trim data-noescape>
+class AwesomeThing
+  include Hanami::Entity
+  attributes %i(name dob created_at)
+end
+          </code></pre>
+          <pre class="fragment"><code>
+class AwesomeThing
+  attr_accessor :id
+  def initialize(attrs = {}); end
+end
+          </code></pre>
         </section>
         <section>
-          <h3></h3>
+          <h3>Repositories</h3>
         </section>
         <section>
-          <h3></h3>
+          <h3>Mappings</h3>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Interactors</h2>
         </section>
       </section>
       <section>
