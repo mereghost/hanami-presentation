@@ -29,8 +29,7 @@
     <div class="slides">
       <section>
         <h1 style="margin-left: -150px;">
-          <img class="img-title" src="imgs/logo.png" alt="hanami logo">
-           Hanami </h1>
+          <img class="img-title" src="imgs/logo.png" alt="hanami logo"> Hanami </h1>
         <h3>A beleza da simplicidade</h3>
       </section>
       <section>
@@ -100,7 +99,7 @@
       </section>
       <section>
         <section>
-          <h2>Estrutura de uma aplicação</h2>
+          <h2>Como se parece uma aplicação</h2>
           <p class="fragment">Monolito primeiro</p>
           <pre class="fragment"><code data-trim>
 $ hanami new aatt #awesome_all_the_things
@@ -130,8 +129,13 @@ $ ls lib/**
         </section>
       </section>
       <section>
+        <h2>O mecanismo de entrega</h2>
+        <img src="imgs/delivery_cat.jpg" alt="delivery_cat">
+      </section>
+      <section>
         <section>
           <h2>Controllers &amp; Actions</h2>
+          <img src="imgs/action_cat.jpg" alt="Action Cat">
         </section>
         <section>
           <h3>Controllers</h3>
@@ -210,6 +214,7 @@ end
       <section>
         <section>
           <h2>Views &amp; Templates</h2>
+          <img src="imgs/ceil_cat.jpg" alt="Ceiling Cat">
         </section>
         <section>
           <h3>Views</h3>
@@ -252,7 +257,9 @@ end
           <h3>Templates</h3>
           <p>Esses vão parecer familiares...</p>
           <pre><code data-trim data-noescape>
-<%= title %>
+&lt;h1&gt;<%= title %>&lt;/h1&gt;
+
+<%= yield %>
           </code></pre>
         </section>
         <section>
@@ -270,8 +277,21 @@ end
         <section>
           <h3>Mas não quero nem usar uma view!</h3>
           <h5><i>#$@&%*!</i> Ok, pensamos nisso</h5>
-          <p class="fragment">Basta setar o body direto no controller</p>
+          <pre class="fragment"><code data-trim data-noescape>
+module Web::Controllers::AwesomeClassName
+  class Index
+    include Web::Action
+    def call(params)
+      self.body = 'something important '
+    end
+  end
+end
+            </code></pre>
         </section>
+      </section>
+      <section>
+        <h2>A aplicação</h2>
+        <img src="imgs/arch_cat.jpg" alt="Architecture" height="500px">
       </section>
       <section>
         <section>
@@ -305,19 +325,79 @@ end
         <section>
           <h3>Mas o que dá pra fazer com eles?</h3>
           <ul>
-            <li class="fragment">#all, #find, #create, #update, #delete</li>
-            <li class="fragment">#persist</li>
+            <li class="fragment">
+              <span class="method">#all</span>,
+              <span class="method">#find</span>,
+              <span class="method">#create</span>,
+              <span class="method">#update</span>,
+              <span class="method">#delete</span>,
+              <span class="method">#first</span>,
+              <span class="method">#last</span></li>
+            <li class="fragment">
+              <span class="method">#persist</span></li>
+              <li class="fragment"><span class="method">#clear</span></li>
+              <li class="fragment">
+                <span class="method">#execute</span>,
+                <span class="method">#fetch</span>
+              </li>
           </ul>
-          <p class="fragment">Todos os métodos de query são privados</p>
+          <p class="fragment">O método <span class="method">#query</span> é privado</p>
           <aside class="notes">Queries com valor de negócio</aside>
         </section>
         <section>
           <h3>Mappings</h3>
+          <p>É como ligamos os repositorios, ao DB e às entities</p>
+        </section>
+        <section>
+          <pre><code data-trim>
+Hanami::Model.configure do
+  adapter type: :sql, uri: ENV['DATABASE_URL']
+  migrations 'db/migrations'
+  schema 'db/schema.sql'
+  mapping do
+    collection :awesome_things do
+      entity AwesomeThing
+      # repository AwesomeThingRepository
+      attribute :id, Integer
+      attribute :coolness_index, Integer
+      attribute :created_at, DateTime
+      attribute :updated_at, DateTime
+    end
+  end
+end
+          </code></pre>
+        </section>
+        <section>
+          <h2>E não é só isso:</h2>
+          <ul>
+            <li class="fragment">Coerção customizada</li>
+            <li class="fragment">Bancos Legados</li>
+            <li class="fragment">Mismatch entre entidade e banco</li>
+          </ul>
+        <aside class="notes">
+          <ol>
+            <li>#dump e #load são a interface. Hanami::Model::Coercer</li>
+          </ol>
+        </aside>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>A estrutura padrão já isola sua aplicação do DB</h2>
+        </section>
+        <section>
+          <h3>Mas.. mas... eu não vou chamar os Repos no meu Controller?</h3>
+          <p>E viver sem callbacks? Self-saving models?</p>
+
+          <aside class="notes">
+            Olhar o rubytapas sobre self saving #401 - #405
+          </aside>
         </section>
       </section>
       <section>
         <section>
           <h2>Interactors</h2>
+          <img src="imgs/interact_cat.gif" alt="Interaction Cat">
         </section>
       </section>
       <section>
