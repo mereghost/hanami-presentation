@@ -94,12 +94,13 @@
         </section>
       </section>
       <section>
+        <img src="imgs/mindset_cat.jpg" alt="Right Mindset">
         <h2>A mudança de mindset</h2>
-        <p>Isso é sempre um desafio =/</p>
+        <small>Isso é sempre um desafio =/</small>
       </section>
       <section>
         <section>
-          <h2>Como se parece uma aplicação</h2>
+          <h2>Mas como tudo começa?</h2>
           <p class="fragment">Monolito primeiro</p>
           <pre class="fragment"><code data-trim>
 $ hanami new aatt #awesome_all_the_things
@@ -335,11 +336,11 @@ end
               <span class="method">#last</span></li>
             <li class="fragment">
               <span class="method">#persist</span></li>
-              <li class="fragment"><span class="method">#clear</span></li>
-              <li class="fragment">
-                <span class="method">#execute</span>,
-                <span class="method">#fetch</span>
-              </li>
+            <li class="fragment"><span class="method">#clear</span></li>
+            <li class="fragment">
+              <span class="method">#execute</span>,
+              <span class="method">#fetch</span>
+            </li>
           </ul>
           <p class="fragment">O método <span class="method">#query</span> é privado</p>
           <aside class="notes">Queries com valor de negócio</aside>
@@ -374,11 +375,11 @@ end
             <li class="fragment">Bancos Legados</li>
             <li class="fragment">Mismatch entre entidade e banco</li>
           </ul>
-        <aside class="notes">
-          <ol>
-            <li>#dump e #load são a interface. Hanami::Model::Coercer</li>
-          </ol>
-        </aside>
+          <aside class="notes">
+            <ol>
+              <li>#dump e #load são a interface. Hanami::Model::Coercer</li>
+            </ol>
+          </aside>
         </section>
       </section>
       <section>
@@ -399,12 +400,47 @@ end
           <h2>Interactors</h2>
           <img src="imgs/interact_cat.gif" alt="Interaction Cat">
         </section>
+        <section>
+          <h3>A regra de negócio vai aqui</h3>
+          <pre><code data-trim data-noescape>
+class AwesomeInteractor
+  include Hanami::Interactor
+  expose :inst_var
+
+  def initialize(value)
+    @inst_var = value
+  end
+
+  def valid?
+    fail! unless @inst_var
+  end
+
+  def call
+    # here be dragons
+  end
+end
+            </code></pre>
+        </section>
+        <section>
+          <h3>Hmmm... e?</h3>
+          <ol>
+            <li class="fragment"><span class="method">#call</span> retorna um
+              <span class="method">Hanami::Result</span></li>
+            <li class="fragment"><span class="method">#success?</span> para saber no que deu</li>
+            <li class="fragment">Nirvana</li>
+          </ol>
+        </section>
+      </section>
+      <section>
+        <h2>Tá bom @mereghost, mas...</h2>
+        <small>Perguntas?</small>
       </section>
       <section>
         <h1>Obrigado!</h1>
         <p>
           Se tiver dúvidas, perguntas, vontade de trabalhar conosco ou só quiser trocar uma ideia:
-          <a href="mailto:marcello.rocha@vagas.com.br">marcello.rocha@vagas.com.br</a>
+          <a href="mailto:marcello.rocha@vagas.com.br">marcello.rocha@vagas.com.br</a> |
+          <a href="https://twitter.com/mereghost">@mereghost</a>
         </p>
         <small>Participem no gitter do projeto Hanami:
             <a href="https://gitter.im/hanami/chat">https://gitter.im/hanami/chat</a></small>
