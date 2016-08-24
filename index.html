@@ -191,6 +191,23 @@ end
           </code></pre>
         </section>
         <section>
+          <h3>E os parâmetros?</h3>
+          <pre><code data-trim>
+class Create
+  include Web::Action
+  params do
+    required(:title) { filled &amp; str? &amp; size(3..254) }
+  end
+end
+          </code></pre>
+          <aside class="notes">
+            <ul>
+              <li>Descarta qqr chave não definida aqui.</li>
+              <li>Suporta deep nesting usando #get em caso de nils</li>
+            </ul>
+          </aside>
+        </section>
+        <section>
           <h5>Mas eu chamo um método sempre a cada request!</h5>
           <pre><code data-trim data-noescape>
 module Web
@@ -299,6 +316,7 @@ end
         <section>
           <h2>Entidades &amp; Repositórios</h2>
           <p>Ou models</p>
+          <img src="imgs/model_cat.jpg" alt="Modeling">
         </section>
         <section>
           <h3>Entities</h3>
@@ -345,6 +363,20 @@ end
           </ul>
           <p class="fragment">O método <span class="method">#query</span> é privado</p>
           <aside class="notes">Queries com valor de negócio</aside>
+        </section>
+        <section>
+          <pre><code data-trim data-noescape>
+AwesomeThing.order(:created_at).limit(10)
+
+class AwesomeThingRepository
+  include Hanami::Repository
+  def self.most_recent(amount = 10)
+    query do
+      order(:created_at).limit(amount)
+    end
+  end
+end
+          </code></pre>
         </section>
         <section>
           <h3>Mappings</h3>
@@ -442,6 +474,25 @@ end
             </ol>
           </aside>
         </section>
+      </section>
+      <section>
+        <h2>Validações</h2>
+        <pre><code>
+class AnExampleClass
+  include Hanami::Validations
+  EMAIL_REGEX = /.+@.+/ #totally works!
+
+  predicate :email?, message: 'not an email' do |actual|
+    actual =~ EMAIL_REGEX
+  end
+
+  validations do
+    required(:a_field) { filled? &amp; str? &amp; size? 3..8 }
+    optional(:another_field) { int? &amp; included_in? 1..9_000 }
+    required(:an_email) { email? }
+  end
+end
+        </code></pre>
       </section>
       <section>
         <h2>Tá bom @mereghost, mas...</h2>
