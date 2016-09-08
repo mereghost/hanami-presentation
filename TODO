@@ -1,12 +1,25 @@
-Tópicos:
+Flow:
 
-- Controllers & Actions
-- Views & Templates
-- Entities & Repositories
-- Interactors
-
-- Validations
-
-Checkar o que é de fato:
-- Content Security Policy
-- X-Frame headers
+- Apresentação   (1m)
+- Sobre a vagas  (2m)
+- O que é Hanami (3m)
+    - Proposta
+    - Valores
+    - O que eu ví de legal
+- Sindrome de Abstinência de Rails (1m)
+- As diferenças: (35m)
+    - Estrutura da App
+        - Container vs Rails
+    - Validação
+        - Sintaxe
+        - Onde
+        - Como
+    - Controllers vs Actions
+        - Pq
+        - Como
+        - Pq
+    - Views + Templates vs Views
+    - Entities + Repositories vs Models
+    - Interactors
+- O que ainda falta
+    - ORM
