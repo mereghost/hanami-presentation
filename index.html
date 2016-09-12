@@ -54,18 +54,17 @@
             <ol>
               <li>Maior site de carreira do Brasil</li>
               <li>Milhoes de requests por dia!</li>
-              <li></li>
+              <li>Sem chefes</li>
+              <li>E é uma empresa de tecnologia</li>
             </ol>
           </aside>
         </section>
       </section>
       <section>
         <section>
-          <h2>O que é Hanami?</h2>
-        </section>
-        <section>
           <h2>Hanami</h2>
-          <h4>é um framework web completo para Ruby</h4>
+          <img class="plain" src="imgs/hanami-1.jpg">
+          <h4 class="fragment">é um framework web para Ruby</h4>
           <aside class="notes">também a prática de apreciar a beleza do florescer das cerejeiras</aside>
         </section>
         <section>
@@ -83,6 +82,7 @@
               <li>100nas funcionalidades, 60% menos memória.</li>
               <li>Diferenciar simples de familiar</li>
             </ol>
+            <p>Mencionar também Threadsafety</p>
           </aside>
         </section>
         <section data-background-image="imgs/uncle_bob.jpg">
@@ -100,37 +100,92 @@
       <section>
         <img src="imgs/mindset_cat.jpg" alt="Right Mindset">
         <h2>A mudança de mindset</h2>
-        <small>Isso é sempre um desafio =/</small>
+      </section>
+      <section>
+          <h2>Diferenças &amp; Dificuldades</h2>
+          <ol>
+            <li>Estrutura</li>
+            <li>Validações</li>
+            <li>Controllers &amp; Actions</li>
+            <li>Views &amp; e Templates</li>
+            <li>Entidades &amp; Repositórios</li>
+            <li>Interactors</li>
+          </ol>
       </section>
       <section>
         <section>
           <h2>Mas como tudo começa?</h2>
-          <p class="fragment">Monolito primeiro</p>
-          <pre class="fragment"><code data-trim>
-$ hanami new aatt #awesome_all_the_things
-# apps config config.ru db lib public Rakefile spec
-          </code></pre>
-          <aside class="notes">
-            Comparar com Django e similares
-          </aside>
-        </section>
-        <section>
-          <h3>Multiplas aplicações &amp; Containers</h3>
-          <pre><code data-trim>
-$ ls apps/web
-# application.rb assets config controllers templates views
-          </code></pre>
-          <p class="fragment">
-            Aplicações dividem apenas as regras de negócio
+          <p>
+            <span class="method">$ hanami new awesome_all_the_things</span>
+            <img class="plain" src="imgs/tree-new.png" alt="Arvore">
           </p>
         </section>
         <section>
-          <h3>E os "models"?</h3>
-          <pre class="fragment"><code data-trim>
-$ ls lib/**
-# aatt.rb aatt/entities aatt/repositories aatt/mailers
+          <h3>Multiplas aplicações &amp; Containers</h3>
+          <img src="imgs/apps-tree.png" alt="Containers">
+          <p class="fragment">Apenas o mecanismo de entrega</p>
+          <aside class="notes">
+            Comparar com Django e similares.
+            Isso facilita a criação de single page apps, permitindo facilmente separar API de Front.
+          </aside>
+        </section>
+        <section>
+          <h3>E cadê o resto?</h3>
+          <img src="imgs/lib-tree.png" alt="Libs will be libs">
+        </section>
+        <section>
+          <h3>A estrutura é apenas pra carregamento automático</h3>
+          <p>Tudo (ou quase) pode ser configurado</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Validações</h2>
+          <p>São providas por um modulo que pode ser incluido em qualquer objeto.</p>
+          <aside class="notes">
+            - Falando primeiro porque isso aparece em vários pontos.
+            - Mecanismo de includes vai ser o padrão em muitos lugares
+          </aside>
+        </section>
+        <section>
+          <h2>Os validadores usam o <a href="http://dry-rb.org/gems/dry-validation/">
+            dry-validation</a> por baixo</h2>
+        </section>
+        <section>
+          <h3>Um exemplo simples</h3>
+          <pre><code data-trim data-noescape>
+# Rails
+validates :some_field, presence: true, length: { in: 3..8 }
+
+# Hanami
+required(:some_field) { filled? &amp; str? &amp; size?(3..8)  }
+# Macros!
+required(:some_field).filled(:str?, size?: (3..8))
+          </pre></code>
+        </section>
+        <section>
+          <h3>Custom Predicates</h3>
+          <pre><code data-trim data-noescape>
+class AnExampleClass
+  include Hanami::Validations
+  EMAIL_REGEX = /.+@.+/ #totally works!
+
+  predicate :email?, message: 'not an email' do |actual|
+    actual =~ EMAIL_REGEX
+  end
+
+  validations do
+    required(:nullable).maybe(:int?)
+    required(:something_or_the_other) { str? | int? }
+    required(:an_email) { email? }
+    optional(:an_array).each(:int?)
+  end
+end
           </code></pre>
-          <p class="fragment">A estrutura é apenas pra carregamento automático, tudo pode ser configurado</p>
+          <aside class="notes">
+            Apresentação mais concisa, poderosa e clara das validações.
+            Campos opcionais e tal.
+          </aside>
         </section>
       </section>
       <section>
@@ -477,25 +532,6 @@ end
             </ol>
           </aside>
         </section>
-      </section>
-      <section>
-        <h2>Validações</h2>
-        <pre><code>
-class AnExampleClass
-  include Hanami::Validations
-  EMAIL_REGEX = /.+@.+/ #totally works!
-
-  predicate :email?, message: 'not an email' do |actual|
-    actual =~ EMAIL_REGEX
-  end
-
-  validations do
-    required(:a_field) { filled? &amp; str? &amp; size? 3..8 }
-    optional(:another_field) { int? &amp; included_in? 1..9_000 }
-    required(:an_email) { email? }
-  end
-end
-        </code></pre>
       </section>
       <section>
         <h2>Tá bom @mereghost, mas...</h2>

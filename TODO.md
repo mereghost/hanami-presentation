@@ -1,23 +1,23 @@
 Flow:
 
-- Apresentação   (1m)
+<!-- - Apresentação   (1m)
 - Sobre a vagas  (2m)
 - O que é Hanami (3m)
     - Proposta
     - Valores
     - O que eu ví de legal
-- Sindrome de Abstinência de Rails (1m)
-- As diferenças: (35m)
+- Sindrome de Abstinência de Rails (1m) -->
+<!-- - As diferenças: (35m)
     - Estrutura da App
-        - Container vs Rails
-    - Validação
+        - Container vs Rails -->
+    <!-- - Validação
         - Sintaxe
         - Onde
-        - Como
+        - Como -->
     - Controllers vs Actions
         - Pq
         - Como
-        - Pq
+        - Onde
     - Views + Templates vs Views
     - Entities + Repositories vs Models
     - Interactors
