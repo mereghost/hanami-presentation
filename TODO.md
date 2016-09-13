@@ -14,11 +14,11 @@ Flow:
         - Sintaxe
         - Onde
         - Como -->
-    - Controllers vs Actions
+    <!-- - Controllers vs Actions
         - Pq
         - Como
-        - Onde
-    - Views + Templates vs Views
+        - Onde -->
+    <!-- - Views + Templates vs Views -->
     - Entities + Repositories vs Models
     - Interactors
 - O que ainda falta
