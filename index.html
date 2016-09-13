@@ -23,25 +23,19 @@
   <div class="reveal">
     <div class="slides">
       <section>
-        <h1 style="margin-left: -150px;">
-          <img class="img-title" src="imgs/logo.png" alt="hanami logo"> Hanami </h1>
-        <h3>A beleza da simplicidade</h3>
-      </section>
-      <section>
         <section>
-          <h2>Quem sou eu?</h2>
-          <p>Alguns me conhecem por <a href="http://twitter.com/mereghost">@mereghost</a></p>
+          <h2>Boa Tarde!</h2>
         </section>
         <section>
-          <h2>Nerd assumido</h2>
+          <h2>Marcello Rocha &lt;<a href="http://twitter.com/mereghost">@mereghost</a>&gt;</h2>
           <ul>
-            <li class="fragment">Leitor voraz</li>
+            <li class="fragment">Apreciador de cervejas artesanais</li>
             <li class="fragment">Apaixonado por RPGs, jogos de
               <a href="http://www.boardgamegeek.com/collection/user/mereghost">tabuleiro</a> etc
             </li>
             <li class="fragment">
               Praticante de
-              <a href="http://www.kytrinyx.com/talks/therapeutic-refactoring">Refactor Terapêutico</a>
+              <a href="http://kytrinyx.com/presentations/therapeutic-refactoring">Refactor Terapêutico</a>
             </li>
           </ul>
           <aside class="notes">TR => Katrina Olwen - 2012</aside>
@@ -61,14 +55,19 @@
         </section>
       </section>
       <section>
+        <h1 style="margin-left: -150px;">
+          <img class="img-title" src="imgs/logo.png" alt="hanami logo"> Hanami </h1>
+        <h3>A beleza da simplicidade</h3>
+      </section>
+      <section>
         <section>
-          <h2>Hanami</h2>
-          <img class="plain" src="imgs/hanami-1.jpg">
-          <h4 class="fragment">é um framework web para Ruby</h4>
+          <h3>Um framework web <u>moderno</u> para Ruby</h3>
+          <img src="imgs/hanami-1.jpg">
+          <p><small>Originalmente Lotus</small></p>
           <aside class="notes">também a prática de apreciar a beleza do florescer das cerejeiras</aside>
         </section>
         <section>
-          <h3>O que ele oferece?</h3>
+          <h3>Mas o que tem de bom?</h3>
           <ol>
             <li class="fragment">Velocidade</li>
             <li class="fragment">Segurança</li>
@@ -98,50 +97,56 @@
         </section>
       </section>
       <section>
-        <img src="imgs/mindset_cat.jpg" alt="Right Mindset">
-        <h2>A mudança de mindset</h2>
+        <h2>Libertar-se do trilhos</h2>
+        <img src="imgs/freedom_cat.jpg" alt="Right Mindset">
       </section>
       <section>
           <h2>Diferenças &amp; Dificuldades</h2>
           <ol>
-            <li>Estrutura</li>
-            <li>Validações</li>
-            <li>Controllers &amp; Actions</li>
-            <li>Views &amp; e Templates</li>
-            <li>Entidades &amp; Repositórios</li>
-            <li>Interactors</li>
+            <li class="fragment">Estrutura do projeto</li>
+            <li class="fragment">Validações</li>
+            <li class="fragment">Mecanismo de Entrega
+              <ul class="fragment">
+                <li>Controllers</li>
+                <li>Views</li>
+              </ul>
+            </li>
+            <li class="fragment">Models</li>
+            <li class="fragment">Interactors</li>
           </ol>
       </section>
       <section>
         <section>
-          <h2>Mas como tudo começa?</h2>
+          <h2>Estrutura de uma aplicação</h2>
+          <aside class="notes">Onde eu coloco as coisas? PORQUE?!?</aside>
+        </section>
+        <section>
           <p>
             <span class="method">$ hanami new awesome_all_the_things</span>
             <img class="plain" src="imgs/tree-new.png" alt="Arvore">
           </p>
+          <aside class="notes">
+            <p>A estrutura é apenas pra carregamento automático</p>
+            <p>Tudo (ou quase) pode ser configurado</p>
+          </aside>
         </section>
         <section>
-          <h3>Multiplas aplicações &amp; Containers</h3>
+          <h3>Multiplas aplicações</h3>
           <img src="imgs/apps-tree.png" alt="Containers">
-          <p class="fragment">Apenas o mecanismo de entrega</p>
           <aside class="notes">
             Comparar com Django e similares.
             Isso facilita a criação de single page apps, permitindo facilmente separar API de Front.
           </aside>
         </section>
         <section>
-          <h3>E cadê o resto?</h3>
+          <h3>Lógica de negócio</h3>
           <img src="imgs/lib-tree.png" alt="Libs will be libs">
-        </section>
-        <section>
-          <h3>A estrutura é apenas pra carregamento automático</h3>
-          <p>Tudo (ou quase) pode ser configurado</p>
         </section>
       </section>
       <section>
         <section>
           <h2>Validações</h2>
-          <p>São providas por um modulo que pode ser incluido em qualquer objeto.</p>
+          <p class="fragment">São providas por um modulo que pode ser incluido em qualquer objeto.</p>
           <aside class="notes">
             - Falando primeiro porque isso aparece em vários pontos.
             - Mecanismo de includes vai ser o padrão em muitos lugares
@@ -166,7 +171,7 @@ required(:some_field).filled(:str?, size?: (3..8))
         <section>
           <h3>Custom Predicates</h3>
           <pre><code data-trim data-noescape>
-class AnExampleClass
+class SomeRandomCoolThing
   include Hanami::Validations
   EMAIL_REGEX = /.+@.+/ #totally works!
 
@@ -194,24 +199,23 @@ end
       </section>
       <section>
         <section>
-          <h2>Controllers &amp; Actions</h2>
+          <h2>Controllers</h2>
           <img src="imgs/action_cat.jpg" alt="Action Cat">
         </section>
         <section>
           <h3>Controllers</h3>
           <p>São apenas um modulo, um namespace.</p>
           <pre><code data-trim data-noescape>
-module Web::Controllers::AwesomeClassName
+module Web::Controllers::SemanticallyRelevantName
   # here be dragons
 end
           </code></pre>
-          <small>Errr... e como ficam as actions?</small>
         </section>
         <section>
           <h3>Actions</h3>
-          <p>São cidadãos de primeira classe.</p>
+          <p>São simples objetos que respondem a <span class="method">#call</span></p>
           <pre><code data-trim data-noescape>
-module Web::Controllers::AwesomeClassName
+module Web::Controllers::SemanticallyRelevantName
   class Index
     include Web::Action
 
@@ -229,32 +233,41 @@ end
         <section>
           <h3>Testabilidade</h3>
           <pre><code data-trim data-noescape>
-RSpec.describe Web::Controllers::AwesomeClassName::Index
+RSpec.describe Web::Controllers::SemanticallyRelevantName::Index
   let(:action) { Web::Controllers::AwesomeClassName::Index.new }
-  subject(:response) { action.call({}) }
+  let(:params) { Hash[] }
+  subject(:response) { action.call(params) }
 
-  it 'does awesome things'
+  it 'just works' do
+    expect(response[0]).to eq(200)
+  end
 end
           </code></pre>
         </section>
         <section>
           <h3>Só mostra o que os outros precisam ver</h3>
           <pre><code data-trim data-noescape>
-module Web::Controllers::AwesomeClassName
+module Web::Controllers::SemanticallyRelevantName
   class Index
     include Web::Action
-    expose :inst_var #algo que a view precise ver
+    expose :instance_variable #algo que a view precise ver
   end
 end
           </code></pre>
         </section>
         <section>
-          <h3>E os parâmetros?</h3>
+          <h3>E parametros mágicos!</h3>
           <pre><code data-trim>
-class Create
-  include Web::Action
-  params do
-    required(:title) { filled &amp; str? &amp; size(3..254) }
+module Web::Controllers::SemanticallyRelevantName
+  class Create
+    include Web::Action
+    params do
+      required(:title) { filled? &amp; str? &amp; size?(3..254) }
+    end
+
+    def call(params)
+      params.get('um.valor.aninhado.que.nao.existe') #=> nil
+    end
   end
 end
           </code></pre>
@@ -266,7 +279,7 @@ end
           </aside>
         </section>
         <section>
-          <h5>Mas eu chamo um método sempre a cada request!</h5>
+          <h5>Reuso de código</h5>
           <pre><code data-trim data-noescape>
 module Web
   module MyReusableBehaviour
@@ -279,7 +292,7 @@ module Web
   private def behaviour; @some_object = "Nothing to see here"; end
 end
 
-module Web::Controllers::AwesomeClassName
+module Web::Controllers::SemanticallyRelevantName
   class Index
     include Web::Action
     include Web::MyReusableBehaviour
@@ -296,15 +309,14 @@ end
         <section>
           <h3>Views</h3>
           <pre><code data-trim data-noescape>
-module Web::Views::AwesomeClassName
+module Web::Views::SemanticallyRelevantName
   class Index
     include Web::Action
 
-    def title; 'Hanami & Ruby'; end
+    def title; 'Hanami &amp; Ruby'; end
   end
 end
           </code></pre>
-          <p>Novamente, cidadãos de primeira classe</p>
           <aside class="notes">
             São como presenters
           </aside>
@@ -312,14 +324,14 @@ end
         <section>
           <h3>E pelo mesmo motivo!</h3>
           <pre><code data-trim>
-RSpec.describe Web::Views::AwesomeClassName::Index
+RSpec.describe Web::Views::SemanticallyRelevantName::Index
   let(:exposures) { Hash[stuff: %w(cool awesome nifty)] }
   let(:template) do
     Hanami::View::Template.new('path/to/template.html.erb')
   end
 
   let(:view) do
-    Web::Views::AwesomeClassName::Index.new(template, exposures)
+    Web::Views::SemanticallyRelevantName::Index.new(template, exposures)
   end
 
   let(:rendered) { view.render }
@@ -342,7 +354,7 @@ end
         <section>
           <h3>Mas não quero usar um template!</h3>
           <pre><code data-trim data-noescape>
-module Web::Views::AwesomeClassName
+module Web::Views::SemanticallyRelevantName
   class Index
     include Web::Action
 
@@ -367,7 +379,7 @@ end
         </section>
       </section>
       <section>
-        <h2>A aplicação</h2>
+        <h2>A Lógica de Negócio</h2>
         <img src="imgs/arch_cat.jpg" alt="Architecture" height="500px">
       </section>
       <section>
@@ -377,14 +389,14 @@ end
           <img src="imgs/model_cat.jpg" alt="Modeling">
         </section>
         <section>
-          <h3>Entities</h3>
+          <h3>Entidades</h3>
           <pre class="fragment"><code data-trim data-noescape>
 class AwesomeThing
   include Hanami::Entity
   attributes %i(name dob created_at)
 end
           </code></pre>
-          <pre class="fragment"><code>
+          <pre class="fragment"><code data-trim data-noescape>
 class AwesomeThing
   attr_accessor :id
   def initialize(attrs = {}); end
@@ -424,7 +436,11 @@ end
         </section>
         <section>
           <pre><code data-trim data-noescape>
+# AR::Base
 AwesomeThing.order(:created_at).limit(10)
+
+# Hanami::Repository
+AwesomeThingRepository.most_recent
 
 class AwesomeThingRepository
   include Hanami::Repository
