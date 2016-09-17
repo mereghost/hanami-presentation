@@ -303,7 +303,7 @@ end
       </section>
       <section>
         <section>
-          <h2>Views &amp; Templates</h2>
+          <h2>Views</h2>
           <img src="imgs/ceil_cat.jpg" alt="Ceiling Cat">
         </section>
         <section>
@@ -313,7 +313,13 @@ module Web::Views::SemanticallyRelevantName
   class Index
     include Web::Action
 
-    def title; 'Hanami &amp; Ruby'; end
+    def title
+      'Hanami &amp; Ruby'
+    end
+
+    def sidebar
+      html.aside(id: sidebar) { div 'Content' }
+    end
   end
 end
           </code></pre>
@@ -322,7 +328,7 @@ end
           </aside>
         </section>
         <section>
-          <h3>E pelo mesmo motivo!</h3>
+          <h3>Testabilidade</h3>
           <pre><code data-trim>
 RSpec.describe Web::Views::SemanticallyRelevantName::Index
   let(:exposures) { Hash[stuff: %w(cool awesome nifty)] }
@@ -358,7 +364,9 @@ module Web::Views::SemanticallyRelevantName
   class Index
     include Web::Action
 
-    def render; {this: 'method'}.to_json; end
+    def render
+      { some: 'object' }.to_json
+    end
   end
 end
           </code></pre>
@@ -399,7 +407,9 @@ end
           <pre class="fragment"><code data-trim data-noescape>
 class AwesomeThing
   attr_accessor :id
-  def initialize(attrs = {}); end
+  def initialize(attrs = {})
+    # ...
+  end
 end
           </code></pre>
         </section>
@@ -494,14 +504,11 @@ end
       <section>
         <section>
           <h2>A estrutura padrão já isola sua aplicação do DB</h2>
+          <p>Mas lembrem: o ideal é isolar sua aplicação do Mecanismo de entrega</p>
         </section>
         <section>
-          <h3>Mas.. mas... eu não vou chamar os Repos no meu Controller?</h3>
-          <p>E viver sem callbacks? Self-saving models?</p>
-
-          <aside class="notes">
-            Olhar o rubytapas sobre self saving #401 - #405
-          </aside>
+          <h3>Isso significa:</h3>
+          <h5>Não chamar os Repositorios direto dos seus controllers</h5>
         </section>
       </section>
       <section>
@@ -514,7 +521,7 @@ end
           <pre><code data-trim data-noescape>
 class AwesomeInteractor
   include Hanami::Interactor
-  expose :inst_var
+  expose :awesome_sauce
 
   def initialize(value)
     @inst_var = value
@@ -525,20 +532,20 @@ class AwesomeInteractor
   end
 
   def call
-    # here be dragons
+    @awesome_sauce = AwesomeThingRepository.most_awesome(value)
   end
 end
             </code></pre>
         </section>
         <section>
           <h3>Hmmm... e?</h3>
+          <p>
+            <span class="method">#call</span> retorna um <span class="method">Hanami::Result</span>
+          </p>
           <ol>
-            <li class="fragment"><span class="method">#call</span> retorna um
-              <span class="method">Hanami::Result</span></li>
             <li class="fragment"><span class="method">#success?</span> para saber no que deu</li>
-            <li class="fragment">
-              <img class="plain" src="imgs/nirvana.jpg" alt="Nirvana Cat" height="300" style="vertical-align: top; margin: 0;">
-              </li>
+            <li class="fragment">Acesso a variável exposta</li>
+            <li class="fragment">Injeção de dependência no seus testes de controller</li>
           </ol>
           <aside class="notes">
             <ol>
@@ -546,7 +553,12 @@ end
               <li>Trabalhando pra passar o param pro call ao invés do initialize</li>
               <li>zen</li>
             </ol>
+
           </aside>
+        </section>
+        <section>
+          <h2>Testing Nirvana</h2>
+          <img class="plain" src="imgs/nirvana.jpg" alt="Nirvana Cat">
         </section>
       </section>
       <section>
