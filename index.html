@@ -29,7 +29,7 @@
         <section>
           <h2>Marcello Rocha &lt;<a href="http://twitter.com/mereghost">@mereghost</a>&gt;</h2>
           <ul>
-            <li class="fragment">Programando ruby a 10+ anos</li>
+            <li class="fragment">Programando ruby há mais de 10 anos</li>
             <li class="fragment">
               Praticante de
               <a href="http://kytrinyx.com/presentations/therapeutic-refactoring">Refactor Terapêutico</a>
@@ -120,7 +120,7 @@
       </section>
       <section>
         <section>
-          <h2>Estrutura de uma aplicação</h2>
+          <h2>Estrutura do projeto</h2>
           <aside class="notes">Onde eu coloco as coisas? PORQUE?!?</aside>
         </section>
         <section>
@@ -216,7 +216,7 @@ end
         </section>
         <section>
           <h3>Actions</h3>
-          <p>São simples objetos que respondem a <span class="method">#call</span></p>
+          <p>São objetos que respondem a <span class="method">#call</span></p>
           <pre><code data-trim data-noescape>
 module Web::Controllers::SemanticallyRelevantName
   class Index
@@ -230,7 +230,7 @@ end
           </code></pre>
           <p class="fragment">Mas qual a vantagem disso?</p>
           <aside class="notes">
-            <p>Falar do call como ponto de referencia</p>
+            <p>Falar do call como ponto de referencia e do Rack</p>
           </aside>
         </section>
         <section>
@@ -259,7 +259,7 @@ end
           </code></pre>
         </section>
         <section>
-          <h3>E parametros mágicos!</h3>
+          <h3>Validação de Parametros</h3>
           <pre><code data-trim>
 module Web::Controllers::SemanticallyRelevantName
   class Create
@@ -395,8 +395,8 @@ end
       </section>
       <section>
         <section>
-          <h2>Entidades &amp; Repositórios</h2>
-          <p>Ou models</p>
+          <h2>Models</h2>
+          <h5>Entidades &amp; Repositórios</h5>
           <img src="imgs/model_cat.jpg" alt="Modeling">
         </section>
         <section>
@@ -404,24 +404,15 @@ end
           <pre class="fragment"><code data-trim data-noescape>
 class AwesomeThing
   include Hanami::Entity
-  attributes %i(name dob created_at)
 end
           </code></pre>
-          <pre class="fragment"><code data-trim data-noescape>
-class AwesomeThing
-  attr_accessor :id
-  def initialize(attrs = {})
-    # ...
-  end
-end
-          </code></pre>
+          <p class="fragment">Nesse momento são imutáveis</p>
         </section>
         <section>
           <h3>Repositories</h3>
           <p>São a interface entre o BD e a Entity.</p>
           <pre><code data-trim>
-class AwesomeThingRepository
-  include Hanami::Repository
+class AwesomeThingRepository < Hanami::Repository
 end
           </code></pre>
         </section>
