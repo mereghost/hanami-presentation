@@ -169,7 +169,7 @@ validates :some_field, presence: true, length: { in: 3..8 }
 required(:some_field) { filled? &amp; str? &amp; size?(3..8)  }
 # Macros!
 required(:some_field).filled(:str?, size?: (3..8))
-          </pre></code>
+          </code></pre>
         </section>
         <section>
           <h3>Custom Predicates</h3>
@@ -194,6 +194,44 @@ end
             Apresentação mais concisa, poderosa e clara das validações.
             Campos opcionais e tal.
           </aside>
+        </section>
+        <section>
+          <h3>Validações Complexas</h3>
+          <pre><code data-trim data-noescape>
+validations do
+  required(:reason).maybe(:int?)
+  optional(:reason_text).maybe(:str?)
+
+  required(:address).schema do
+    required(:zip_code) { filled? & format?(/\d{5}-\d{3}/) }
+    required(:country).filled(:str?)
+  end
+
+  rule(:others, [:reason, :reason_text]) do |reason, text|
+    options.none?.then(text.filled?) & options.filled?.then(text.none?)
+  end
+end
+          </code></pre>
+        </section>
+        <section>
+          <h3>Reuso</h3>
+          <pre><code data-trim data-noescape>
+class AddressValidator
+  include Hanami::Validations
+
+  validations do
+    required(:zip_code) { format? /^\d{5}-?\d{3}$/ }
+  end
+end
+class UserValidator
+  include Hanami::Validations
+
+  validations do
+    required(:name) { filled? & str? }
+    required(:address).schema(AddressValidator)
+  end
+end
+          </code></pre>
         </section>
       </section>
       <section>
@@ -406,7 +444,16 @@ class AwesomeThing
   include Hanami::Entity
 end
           </code></pre>
-          <p class="fragment">Nesse momento são imutáveis</p>
+          <p class="fragment">Neste momento são imutáveis</p>
+        </section>
+        <section>
+          <h2 class="red">Cuidado!</h2>
+          <pre><code data-trim data-noescape class="ruby">
+thing1 = AwesomeThing.new(id: 3, value: 'cool')
+thing2 = AwesomeThing.new(id: 3, value: 'awesome')
+
+thing1 == thing2 #=> true (╯°□°）╯︵ ┻━┻
+          </code></pre>
         </section>
         <section>
           <h3>Repositories</h3>
@@ -435,7 +482,7 @@ end
               <span class="method">#fetch</span>
             </li>
           </ul>
-          <p class="fragment">O método <span class="method">#query</span> é privado</p>
+          <p class="fragment">Os métodos de query são privados</p>
           <aside class="notes">Queries com valor de negócio</aside>
         </section>
         <section>
