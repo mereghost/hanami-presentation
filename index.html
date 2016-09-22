@@ -19,7 +19,7 @@
 </head>
 
 <body>
-  <img src="imgs/logo-vagas.png" class="watermark">
+  <img src="imgs/logo-vagas.png" class="watermark" alt="Watermark">
   <div class="reveal">
     <div class="slides">
       <section>
@@ -51,7 +51,7 @@
               <li>Maior site de carreira do Brasil</li>
               <li>Milhoes de requests por dia!</li>
             </ol>
-          </asides>
+          </aside>
         </section>
       </section>
       <section>
@@ -62,7 +62,7 @@
       <section>
         <section>
           <h3>Um framework web <u>moderno</u> para Ruby</h3>
-          <img src="imgs/hanami-1.jpg">
+          <img src="imgs/hanami-1.jpg" alt="Hanami">
           <p>Originalmente chamado <strong>Lotus</strong></p>
           <aside class="notes">também a prática de apreciar a beleza do florescer das cerejeiras</aside>
         </section>
@@ -352,7 +352,7 @@ end
           <pre><code data-trim data-noescape>
 module Web::Views::SemanticallyRelevantName
   class Index
-    include Web::Action
+    include Web::View
 
     def title
       'Hanami &amp; Ruby'
@@ -429,7 +429,7 @@ end
       </section>
       <section>
         <h2>A Lógica de Negócio</h2>
-        <img src="imgs/arch_cat.jpg" alt="Architecture" height="500px">
+        <img src="imgs/arch_cat.jpg" alt="Architecture" height="500">
       </section>
       <section>
         <section>
@@ -486,71 +486,65 @@ end
           <aside class="notes">Queries com valor de negócio</aside>
         </section>
         <section>
-          <pre><code data-trim data-noescape>
+          <h3>Um exemplo bem, mas bem simples</h3>
+          <pre><code data-trim data-noescape class="ruby">
 # AR::Base
 AwesomeThing.order(:created_at).limit(10)
 
 # Hanami::Repository
-AwesomeThingRepository.most_recent
+AwesomeThingRepository.new.most_recent
 
-class AwesomeThingRepository
-  include Hanami::Repository
-  def self.most_recent(amount = 10)
-    query do
-      order(:created_at).limit(amount)
-    end
+class AwesomeThingRepository < Hanami::Repository
+  def most_recent(amount = 10)
+    order(:created_at).limit(amount).all
   end
 end
           </code></pre>
         </section>
         <section>
-          <h3>Mappings</h3>
-          <p>É como ligamos os repositorios, ao DB e às entities</p>
-        </section>
-        <section>
+          <h3>E bancos legados</h3>
           <pre><code data-trim>
-Hanami::Model.configure do
-  adapter type: :sql, uri: ENV['DATABASE_URL']
-  migrations 'db/migrations'
-  schema 'db/schema.sql'
+class LegacyDatabaseRepository < Hanami::Repository
+  self.relation = :tbl_dumb_names
+
   mapping do
-    collection :awesome_things do
-      entity AwesomeThing
-      # repository AwesomeThingRepository
-      attribute :id, Integer
-      attribute :coolness_index, Integer
-      attribute :created_at, DateTime
-      attribute :updated_at, DateTime
-    end
+    attribute :id, from: :int_identity_id
+    attribute :date_of_birth, from: date_birth_date
   end
 end
           </code></pre>
-        </section>
-        <section>
-          <h2>E não é só isso:</h2>
-          <ul>
-            <li class="fragment">Coerção customizada</li>
-            <li class="fragment">Bancos Legados</li>
-            <li class="fragment">Mismatch entre entidade e banco</li>
-          </ul>
           <aside class="notes">
             <ol>
-              <li>#dump e #load são a interface. Hanami::Model::Coercer</li>
               <li>legacy_name, Type, as: field_name</li>
               <li>Só o que é definido no mapper vai pro banco</li>
             </ol>
           </aside>
         </section>
+        <section>
+          <h2>Relacionamentos</h2>
+          <pre><code data-trim>
+class UserRepository < Hanami::Repository
+  associations do
+    has_many :posts
+  end
+
+  def find_with_posts(id)
+    aggregate(:posts).where(user_id: id).as(User).one
+  end
+
+  def posts_for(user)
+    assoc(:posts, user)
+  end
+end
+          </code></pre>
+          <aside class="notes">
+            Experimental. Pre-Release.
+          </aside>
+        </section>
       </section>
       <section>
-        <section>
-          <h2>A estrutura padrão já isola sua aplicação do DB</h2>
-          <p>Mas lembrem: o ideal é isolar sua aplicação do Mecanismo de entrega</p>
-        </section>
-        <section>
-          <h3>Isso significa:</h3>
-          <h5>Não chamar os Repositorios direto dos seus controllers</h5>
-        </section>
+        <h2>A estrutura padrão já isola sua aplicação do DB</h2>
+        <p>O ideal é isolar sua aplicação <strong>também</strong> do mecanismo de entrega</p>
       </section>
       <section>
         <section>
@@ -603,7 +597,7 @@ end
         </section>
       </section>
       <section>
-        <h2>Tá bom @mereghost, mas...</h2>
+        <h2>Perguntas</h2>
         <img src="imgs/PuzzledCat.jpg" alt="Huh?!?">
       </section>
       <section>
