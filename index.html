@@ -72,7 +72,7 @@
           <aside class="notes">também a prática de apreciar a beleza do florescer das cerejeiras</aside>
         </section>
         <section>
-          <h3>O que isso quer dizer?</h3>
+          <h3>Qual o foco dele?</h3>
           <ol>
             <li class="fragment">Velocidade</li>
             <li class="fragment">Segurança</li>
@@ -89,6 +89,7 @@
             <p>
               Outros pontos: Multiplas pequenas gems desacopladas,
                 Threadsafety e EBI (Entity / Boundary / Interactor)
+                They LOVE Ruby
             </p>
           </aside>
         </section>
@@ -120,7 +121,7 @@
               </ul>
             </li>
             <li class="fragment">Models</li>
-            <li class="fragment">Interactors</li>
+            <li class="fragment"><strong>Interactors</strong></li>
           </ol>
       </section>
       <section>
@@ -140,7 +141,7 @@
         </section>
         <section>
           <h3>Multiplas aplicações</h3>
-          <img src="imgs/apps-tree.png" alt="Containers">
+          <img src="imgs/apps-tree.png" class="plain" alt="Containers">
           <aside class="notes">
             Comparar com Django e similares.
             Isso facilita a criação de single page apps, permitindo facilmente separar API de Front.
@@ -148,7 +149,7 @@
         </section>
         <section>
           <h3>Lógica de negócio</h3>
-          <img src="imgs/lib-tree.png" alt="Libs will be libs">
+          <img src="imgs/lib-tree.png" class="plain" alt="Libs will be libs">
         </section>
       </section>
       <section>
@@ -161,7 +162,7 @@
           </aside>
         </section>
         <section>
-          <h2>Os validadores usam o <a href="http://dry-rb.org/gems/dry-validation/">
+          <h2>Os validadores usam a <a href="http://dry-rb.org/gems/dry-validation/">
             dry-validation</a> por baixo</h2>
         </section>
         <section>
@@ -172,7 +173,7 @@ validates :some_field, presence: true, length: { in: 3..8 }
 
 # Hanami
 required(:some_field) { filled? &amp; str? &amp; size?(3..8)  }
-# Macros!
+# Agora com Macros!
 required(:some_field).filled(:str?, size?: (3..8))
           </code></pre>
         </section>
@@ -397,10 +398,11 @@ end
         <section>
           <h3>Templates</h3>
           <p>Esses vão parecer familiares...</p>
-          <pre><code data-trim data-noescape>
+          <pre><code data-trim>
 &lt;h1&gt;<%= title %>&lt;/h1&gt;
 
 <%= yield %>
+<%= render partial: 'home/index' %>
           </code></pre>
         </section>
         <section>
