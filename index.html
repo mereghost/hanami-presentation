@@ -214,7 +214,7 @@ validations do
   end
 
   rule(:others, [:reason, :reason_text]) do |reason, text|
-    options.none?.then(text.filled?) & options.filled?.then(text.none?)
+    reason.none?.then(text.filled?) & reason.filled?.then(text.none?)
   end
 end
           </code></pre>
@@ -627,7 +627,6 @@ end
       // More info https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
         history: true,
-
         // More info https://github.com/hakimel/reveal.js#dependencies
         dependencies: [
           { src: 'plugin/markdown/marked.js' },
